@@ -10,15 +10,12 @@ public class GoToNextLevel : MonoBehaviour
     [SerializeField] private GameObject currentGrid;
     [SerializeField] private GameObject Player;
     [SerializeField] private SpawnReplay spawnReplay;
-    [SerializeField] private Ghost ghost;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            ghost.isRecord = false;
-            Player.gameObject.transform.position = new Vector2(-10, -1);
             int levelID = SceneManager.GetActiveScene().buildIndex;
-            if (PlayerPrefs.GetInt("Level") == 2)
+            if (PlayerPrefs.GetInt("Level") == 2) //leveli bitirdi. Sonraki level. Örnek 2.2 -> 3.1
             {
                 PlayerPrefs.SetInt("Level", 1);
                 SceneManager.LoadScene(levelID + 1);
@@ -26,6 +23,7 @@ public class GoToNextLevel : MonoBehaviour
             } 
             PlayerPrefs.SetInt("Level", 2);
             spawnReplay.LevelChanged();
+            Player.gameObject.transform.position = new Vector2(-10, -1);
             previousGrid.SetActive(false);
             currentGrid.SetActive(true);
 

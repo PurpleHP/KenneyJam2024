@@ -11,41 +11,34 @@ public class SpawnReplay : MonoBehaviour
     private int sceneID;
     private void Awake()
     {
-        /*
+        
         if (PlayerPrefs.HasKey("Level"))
         {
-            PlayerPrefs.SetInt("Level",2);
-            int level = PlayerPrefs.GetInt("Level");
-            if (level % 2 == 0) //asıl level, ghost kaydet
+            if (PlayerPrefs.GetInt("Level") == 1) //asıl level, ghost kaydet şuanlık ghost yok
             {
                 ghostPlayer.SetActive(false);
                 ghostScriptable.isReplay = false;
                 ghostScriptable.isRecord = true;
+
             }
-            else
+            else //ghost spawn olacak
             {
                 ghostPlayer.SetActive(true);
                 ghostScriptable.isRecord = false;
                 ghostScriptable.isReplay = true;
             }
         }
-        */
         
-        ghostPlayer.SetActive(false);
-        ghostScriptable.ResetData();
-        ghostScriptable.isReplay = false;
-        ghostScriptable.isRecord = true;
        
     }
 
     public void LevelChanged()
     {
-        /*
-         * Debug.Log("Level Changed");
+        
+        Debug.Log("Level Changed");
         if (PlayerPrefs.HasKey("Level"))
         {
             int level = PlayerPrefs.GetInt("Level");
-            Debug.Log("Level: " + level);
             if (level % 2 == 0) //asıl level, ghost kaydet
             {
                 ghostPlayer.SetActive(false);
@@ -59,10 +52,7 @@ public class SpawnReplay : MonoBehaviour
                 ghostScriptable.isReplay = true;
             }
         }
-         */
-        ghostScriptable.isRecord = false;
-        ghostScriptable.isReplay = true;
-        ghostPlayer.SetActive(true);
+        
 
     }
     
