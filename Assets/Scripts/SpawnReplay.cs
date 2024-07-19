@@ -60,9 +60,10 @@ public class SpawnReplay : MonoBehaviour
             }
         }
          */
-        ghostPlayer.SetActive(true);
         ghostScriptable.isRecord = false;
         ghostScriptable.isReplay = true;
+        ghostPlayer.SetActive(true);
+
     }
     
 }

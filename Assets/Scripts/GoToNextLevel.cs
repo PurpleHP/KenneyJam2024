@@ -14,6 +14,7 @@ public class GoToNextLevel : MonoBehaviour
     {
         if (other.gameObject.CompareTag("Player"))
         {
+            spawnReplay.LevelChanged();
             //String levelID = SceneManager.GetActiveScene().name.Substring(7);
             if (PlayerPrefs.GetInt("Level") == 1)
             {
@@ -25,10 +26,10 @@ public class GoToNextLevel : MonoBehaviour
 
             }
             Debug.Log("PlayerPrefs: " + PlayerPrefs.GetInt("Level"));
-            spawnReplay.LevelChanged();
-            Player.gameObject.transform.position = new Vector2(-10, -1);
             previousGrid.SetActive(false);
             currentGrid.SetActive(true);
+            Player.gameObject.transform.position = new Vector2(-10, -1);
+
         }
     }
 }

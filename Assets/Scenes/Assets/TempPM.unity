@@ -170,8 +170,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   player: {fileID: 440533941}
   playerGhost: {fileID: 544300016}
-  solidMaterial: {fileID: 0}
-  dashedMaterial: {fileID: 0}
+  solidMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
+  dashedMaterial: {fileID: 2100000, guid: 18b6866edcd71cf43a6eaf21377a024b, type: 2}
 --- !u!120 &246763207
 LineRenderer:
   serializedVersion: 2
@@ -193,7 +193,7 @@ LineRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 10754, guid: 0000000000000000f000000000000000, type: 0}
+  - {fileID: 2100000, guid: 18b6866edcd71cf43a6eaf21377a024b, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
@@ -213,7 +213,7 @@ LineRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingLayer: 0
-  m_SortingOrder: 0
+  m_SortingOrder: -1
   m_Positions:
   - {x: 0, y: 0, z: 0}
   - {x: 5, y: 0, z: 1}
@@ -345,6 +345,7 @@ MonoBehaviour:
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
+  levelNumber: 0
 --- !u!212 &440533940
 SpriteRenderer:
   m_ObjectHideFlags: 0
