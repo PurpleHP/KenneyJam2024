@@ -10,6 +10,8 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
 
+    public int levelNumber;
+
     private Rigidbody2D rb;
     private bool isGrounded;
     private int jumpsRemaining;
@@ -21,6 +23,14 @@ public class PlayerMovement : MonoBehaviour
 
     private void Awake()
     {
+        if (PlayerPrefs.HasKey("Level"))
+        {
+            levelNumber = PlayerPrefs.GetInt("Level");
+        }
+        else
+        {
+            PlayerPrefs.SetInt("Level", 0);
+        }
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = 1;
         isDashing = false;
