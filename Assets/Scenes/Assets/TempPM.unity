@@ -182,8 +182,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c865a77ca8f607843aecd22eb1609370, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  moveSpeed: 7
-  jumpForce: 8.71
+  moveSpeed: 5
+  jumpForce: 8.73
+  dashSpeed: 10
   groundCheck: {fileID: 574131104}
   groundLayer:
     serializedVersion: 2
