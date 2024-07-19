@@ -8,7 +8,7 @@ public class GhostRecorder : MonoBehaviour
     private float timer;
     private float timeValue;
 
-    private void Awake()
+    private void Start()
     {
         if (ghost.isRecord)
         {
@@ -17,7 +17,7 @@ public class GhostRecorder : MonoBehaviour
             timer = 0;
         }
     }
-    private void Update()
+    private void FixedUpdate()
     {
         timer += Time.unscaledDeltaTime;
         timeValue += Time.unscaledDeltaTime;

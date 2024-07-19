@@ -10,25 +10,24 @@ public class GoToNextLevel : MonoBehaviour
     [SerializeField] private GameObject currentGrid;
     [SerializeField] private GameObject Player;
     [SerializeField] private SpawnReplay spawnReplay;
+    [SerializeField] private Ghost ghost;
     private void OnTriggerEnter2D(Collider2D other)
     {
         if (other.gameObject.CompareTag("Player"))
         {
-            spawnReplay.LevelChanged();
-            //String levelID = SceneManager.GetActiveScene().name.Substring(7);
-            if (PlayerPrefs.GetInt("Level") == 1)
-            {
-                PlayerPrefs.SetInt("Level", 2);
-            }
-            else
+            ghost.isRecord = false;
+            Player.gameObject.transform.position = new Vector2(-10, -1);
+            int levelID = SceneManager.GetActiveScene().buildIndex;
+            if (PlayerPrefs.GetInt("Level") == 2)
             {
                 PlayerPrefs.SetInt("Level", 1);
-
-            }
-            Debug.Log("PlayerPrefs: " + PlayerPrefs.GetInt("Level"));
+                SceneManager.LoadScene(levelID + 1);
+                return;
+            } 
+            PlayerPrefs.SetInt("Level", 2);
+            spawnReplay.LevelChanged();
             previousGrid.SetActive(false);
             currentGrid.SetActive(true);
-            Player.gameObject.transform.position = new Vector2(-10, -1);
 
         }
     }
