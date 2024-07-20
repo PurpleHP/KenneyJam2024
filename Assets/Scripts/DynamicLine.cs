@@ -11,16 +11,23 @@ public class DynamicLine : MonoBehaviour
     private bool startDeathCounter;
     private float deathCounter;
 
+    [SerializeField] private SpawnReplay ghostHandler;
+
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
+        
     }
 
     void Update()
     {
-        // Set the line positions
+        if (ghostHandler.spriteIsEnabled)
+        {
+            lineRenderer.enabled = true;
+             // Set the line positions
         lineRenderer.SetPosition(0, player.position);
+        
         lineRenderer.SetPosition(1, playerGhost.position);
 
         float distance = Vector3.Distance(player.position, playerGhost.position);
@@ -57,7 +64,6 @@ public class DynamicLine : MonoBehaviour
             lineRenderer.textureMode = LineTextureMode.Tile;
 
             startDeathCounter = true;
-            Debug.Log(deathCounter);
 
 
         }
@@ -80,5 +86,11 @@ public class DynamicLine : MonoBehaviour
             Debug.Log("Death Sequance Started!");
             yield return new();
         }
+        }
+        else
+        {
+            lineRenderer.enabled = false;
+        }
+       
     }
 }

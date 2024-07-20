@@ -9,6 +9,9 @@ public class SpawnReplay : MonoBehaviour
     [SerializeField] private Ghost ghostScriptable;
     [SerializeField] private GameObject ghostPlayer;
     [SerializeField] private GameObject spawnPoint;
+
+    public bool spriteIsEnabled;
+    
     private SpriteRenderer sr;
     private int sceneID;
     private void Awake()
@@ -20,6 +23,7 @@ public class SpawnReplay : MonoBehaviour
             if (PlayerPrefs.GetInt("Level") == 1) //asıl level, ghost kaydet şuanlık ghost yok
             {
                 sr.enabled = false;
+                spriteIsEnabled = false;
                 ghostPlayer.SetActive(false);
                 ghostScriptable.isReplay = false;
                 ghostScriptable.isRecord = true;
@@ -29,6 +33,7 @@ public class SpawnReplay : MonoBehaviour
             {
                 ghostPlayer.SetActive(true);
                 sr.enabled = true;
+                spriteIsEnabled = true;
                 ghostScriptable.isRecord = false;
                 ghostScriptable.isReplay = true;
             }
@@ -46,6 +51,7 @@ public class SpawnReplay : MonoBehaviour
             if (PlayerPrefs.GetInt("Level") == 1) //asıl level, ghost kaydet
             {
                 sr.enabled = false;
+                spriteIsEnabled = false;
                 ghostPlayer.SetActive(false);
                 ghostScriptable.isReplay = false;
                 ghostScriptable.isRecord = true;
@@ -70,6 +76,7 @@ public class SpawnReplay : MonoBehaviour
         ghostPlayer.gameObject.transform.position = spawnPoint.gameObject.transform.position;
         yield return new WaitForSeconds(startTime);
         sr.enabled = true;
+        spriteIsEnabled = true;
         ghostScriptable.isReplay = true;
 
     }

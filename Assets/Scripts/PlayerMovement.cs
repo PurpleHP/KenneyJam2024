@@ -1,21 +1,22 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class PlayerMovement : MonoBehaviour
 {
     [SerializeField] float moveSpeed = 5f;
     [SerializeField] float jumpForce = 10f;
-    [SerializeField] float dashSpeed = 20f; // Adjust as needed
-    [SerializeField] float dashDuration = 0.2f; // Adjust as needed
-    [SerializeField] float dashCooldown = 1f; // Adjust as needed
+    [SerializeField] float dashSpeed = 20f; 
+    [SerializeField] float dashDuration = 0.2f; 
+    [SerializeField] float dashCooldown = 1f; 
+    
     [SerializeField] Transform groundCheck1;
     [SerializeField] Transform groundCheck2;
-
     [SerializeField] LayerMask groundLayer;
-
-    public int levelNumber; //1 -> Ghost yok, 2 -> Ghost var
+    [SerializeField] private GameObject SpawnPoint;
 
     private Rigidbody2D rb;
     private bool isGrounded;
+    private bool wasGrounded;
     private int jumpsRemaining;
     private bool isDashing;
     private float dashTime;
@@ -23,87 +24,96 @@ public class PlayerMovement : MonoBehaviour
     private float horizontalInput;
     private float lastDirection = 1f; // 1 for right, -1 for left
     
-    //Animation -------------------------------------------------------------
+    // Sound
+    public AudioSource src;
+    public List<AudioClip> sfx = new List<AudioClip>(3); //0 -> Walk, 1 -> Dash, 2 -> Land, 3 -> Jump
+
+    // Animation
     private Animator anim;
     private static readonly int IsWalking = Animator.StringToHash("isWalking");
     private static readonly int IsJumping = Animator.StringToHash("isJumping");
     private static readonly int IsSprintJumping = Animator.StringToHash("isSprintJumping");
 
-
     private void Awake()
     {
+        transform.position = SpawnPoint.transform.position;
         anim = GetComponent<Animator>();
-        if (PlayerPrefs.HasKey("Level"))
-        {
-            levelNumber = PlayerPrefs.GetInt("Level");
-        }
-        else
-        {
-            PlayerPrefs.SetInt("Level", 1);
-        }
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = 1;
         isDashing = false;
         dashTime = 0f;
         lastDashTime = -dashCooldown; // So that the player can dash immediately at start
+        wasGrounded = true;
     }
+private void Update()
+{
+    isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.15f, groundLayer) || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
 
-    private void Update()
+    if (isGrounded && !wasGrounded) // Landing sound
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.15f, groundLayer) || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
-
-        if (!isDashing)
-        {
-            horizontalInput = Input.GetAxis("Horizontal");
-
-            // Update facing direction based on input
-            if (horizontalInput > 0)
-            {
-                lastDirection = 1f;
-                transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face right
-            }
-            else if (horizontalInput < 0)
-            {
-                lastDirection = -1f;
-                transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face left
-            }
-
-            // Update horizontal velocity while preserving the vertical velocity
-            rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
-
-            // Jumping
-            if (isGrounded)
-            {
-                jumpsRemaining = 1; // Reset jumps when grounded
-                dashCooldown = 0f;
-            }
-
-            if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
-            {
-                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-                jumpsRemaining--;
-            }
-
-            // Dashing
-            if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown)
-            {
-                StartDash();
-            }
-
-            SetAnimation();
-        }
-        else
-        {
-            ContinueDash();
-        }
+        src.PlayOneShot(sfx[2]);
     }
+
+    wasGrounded = isGrounded;
+
+    if (!isDashing)
+    {
+        horizontalInput = Input.GetAxis("Horizontal");
+        
+        // Update facing direction based on input
+        if (horizontalInput > 0)
+        {
+            lastDirection = 1f;
+            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face right
+        }
+        else if (horizontalInput < 0)
+        {
+            lastDirection = -1f;
+            transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face left
+        }
+
+        // Update horizontal velocity while preserving the vertical velocity
+        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+       
+        if (isGrounded)
+        {
+            jumpsRemaining = 1; // Reset jumps when grounded
+            dashCooldown = 0f;
+        }
+
+        // Jumping
+        if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
+        {
+            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+            jumpsRemaining--;
+            src.PlayOneShot(sfx[3]);
+        }
+
+        // Dashing
+        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown)
+        {
+            StartDash();
+        }
+
+       
+
+        SetAnimation();
+    }
+    else
+    {
+        ContinueDash();
+    }
+}
+
 
     private void StartDash()
     {
         isDashing = true;
         dashTime = Time.time;
         lastDashTime = Time.time;
+        src.PlayOneShot(sfx[1]);
 
+        
         rb.velocity = new Vector2(lastDirection * dashSpeed, rb.velocity.y); // Dashing in the direction the player is facing
     }
 
@@ -152,6 +162,7 @@ public class PlayerMovement : MonoBehaviour
         if (isGrounded && Mathf.Abs(horizontalInput) > 0.1f) // If grounded and moving horizontally
         {
             anim.SetBool(IsWalking, true);
+        
         }
         else
         {
