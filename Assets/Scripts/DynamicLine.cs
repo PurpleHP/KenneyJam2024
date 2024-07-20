@@ -10,87 +10,118 @@ public class DynamicLine : MonoBehaviour
     private LineRenderer lineRenderer;
     private bool startDeathCounter;
     private float deathCounter;
-
+    public AudioClip deathSound;
+    public float deathTime = 2.5f;
     [SerializeField] private SpawnReplay ghostHandler;
+    private AudioSource audioSource;
 
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
-        
+        audioSource = GetComponent<AudioSource>(); // Initialize audioSource
     }
 
     void Update()
     {
         if (ghostHandler.spriteIsEnabled)
         {
-            lineRenderer.enabled = true;
-             // Set the line positions
-        lineRenderer.SetPosition(0, player.position);
-        
-        lineRenderer.SetPosition(1, playerGhost.position);
-
-        float distance = Vector3.Distance(player.position, playerGhost.position);
-
-        if (distance < 2f) //Short Distance
-        {
-            // Use solid material
-            lineRenderer.material = solidMaterial;
-            // Ensure the solid line covers the entire length
-            lineRenderer.textureMode = LineTextureMode.Stretch;
-
-            // Set the color gradient to green
-            Gradient gradientGreen = new Gradient();
-            gradientGreen.colorKeys = new GradientColorKey[] { new GradientColorKey(Color.green, 0f), new GradientColorKey(Color.green, 1f) };
-            lineRenderer.colorGradient = gradientGreen;
-        }
-        else if (distance < 4f) //Mid Distance
-        {
-            // Use solid material
-            lineRenderer.material = solidMaterial;
-            // Ensure the solid line covers the entire length
-            lineRenderer.textureMode = LineTextureMode.Stretch;
-
-            // Set the color gradient to yellow
-            Gradient gradientYellow = new Gradient();
-            gradientYellow.colorKeys = new GradientColorKey[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.yellow, 1f) };
-            lineRenderer.colorGradient = gradientYellow;
-        }
-        else if (distance > 6f) //Long Distance
-        {
-            // Use dashed material
-            lineRenderer.material = dashedMaterial;
-            // Repeat the dashed pattern
-            lineRenderer.textureMode = LineTextureMode.Tile;
-
-            startDeathCounter = true;
-
-
-        }
-
-        if (startDeathCounter)
-        {
-            deathCounter += Time.deltaTime;
-            if (deathCounter > 3f && distance > 6f)
-            {
-                StartCoroutine(DeathSequance());
-            }
-            else if (distance < 6f)
-            {
-                deathCounter = 0f;
-                startDeathCounter = false;
-            }
-        }
-        IEnumerator DeathSequance()
-        {
-            Debug.Log("Death Sequance Started!");
-            yield return new();
-        }
+            UpdateLineRenderer();
+            HandleDeathSequence();
         }
         else
         {
             lineRenderer.enabled = false;
         }
-       
+    }
+
+    private void UpdateLineRenderer()
+    {
+        lineRenderer.enabled = true;
+        lineRenderer.SetPosition(0, player.position);
+        lineRenderer.SetPosition(1, playerGhost.position);
+
+        float distance = Vector3.Distance(player.position, playerGhost.position);
+        UpdateLineColor(distance);
+    }
+
+    private void UpdateLineColor(float distance)
+    {
+        if (distance <= 3.2f)
+        {
+            SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.green, Color.green);
+        }
+        else if (distance <= 4f)
+        {
+            SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.green, Color.yellow);
+        }
+        else if (distance <= 4.7f)
+        {
+            SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.yellow, Color.yellow);
+        }
+        else if (distance < 6f)
+        {
+            SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.yellow, Color.red);
+        }
+        else
+        {
+            SetLineProperties(dashedMaterial, LineTextureMode.Tile, Color.red, Color.red);
+            HandleDeathSound();
+        }
+    }
+
+    private void SetLineProperties(Material material, LineTextureMode textureMode, Color startColor, Color endColor)
+    {
+        lineRenderer.material = material;
+        lineRenderer.textureMode = textureMode;
+        Gradient gradient = new Gradient();
+        gradient.colorKeys = new GradientColorKey[]
+        {
+            new GradientColorKey(startColor, 0f),
+            new GradientColorKey(endColor, 1f)
+        };
+        lineRenderer.colorGradient = gradient;
+    }
+
+    private void HandleDeathSound()
+    {
+        if (!audioSource.isPlaying)
+        {
+            audioSource.PlayOneShot(deathSound, 0.5f);
+            startDeathCounter = true;
+        }
+    }
+
+    private void HandleDeathSequence()
+    {
+        if (startDeathCounter)
+        {
+            deathCounter += Time.deltaTime;
+            float distance = Vector3.Distance(player.position, playerGhost.position);
+
+            if (deathCounter > deathTime && distance > 6f)
+            {
+                StartCoroutine(DeathSequence());
+            }
+            else if (distance < 6f)
+            {
+                ResetDeathCounter();
+            }
+        }
+    }
+
+    private void ResetDeathCounter()
+    {
+        audioSource.Stop();
+        deathCounter = 0f;
+        startDeathCounter = false;
+    }
+
+    IEnumerator DeathSequence()
+    {
+        Debug.Log("Death Sequence Started!");
+        Instantiate(Resources.Load("ExplosionPrefab"), player.position, Quaternion.identity); // Assuming you have an ExplosionPrefab in your Resources folder
+        Destroy(player.gameObject);
+        yield return null;
     }
 }
