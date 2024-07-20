@@ -25,7 +25,7 @@ public class DynamicLine : MonoBehaviour
 
         float distance = Vector3.Distance(player.position, playerGhost.position);
 
-        if (distance < 5f) //Short Distance
+        if (distance < 2f) //Short Distance
         {
             // Use solid material
             lineRenderer.material = solidMaterial;
@@ -37,7 +37,7 @@ public class DynamicLine : MonoBehaviour
             gradientGreen.colorKeys = new GradientColorKey[] { new GradientColorKey(Color.green, 0f), new GradientColorKey(Color.green, 1f) };
             lineRenderer.colorGradient = gradientGreen;
         }
-        else if (distance < 10f) //Mid Distance
+        else if (distance < 4f) //Mid Distance
         {
             // Use solid material
             lineRenderer.material = solidMaterial;
@@ -49,7 +49,7 @@ public class DynamicLine : MonoBehaviour
             gradientYellow.colorKeys = new GradientColorKey[] { new GradientColorKey(Color.yellow, 0f), new GradientColorKey(Color.yellow, 1f) };
             lineRenderer.colorGradient = gradientYellow;
         }
-        else if (distance > 10f) //Long Distance
+        else if (distance > 6f) //Long Distance
         {
             // Use dashed material
             lineRenderer.material = dashedMaterial;
@@ -65,11 +65,11 @@ public class DynamicLine : MonoBehaviour
         if (startDeathCounter)
         {
             deathCounter += Time.deltaTime;
-            if (deathCounter > 3f && distance > 10f)
+            if (deathCounter > 3f && distance > 6f)
             {
                 StartCoroutine(DeathSequance());
             }
-            else if (distance < 10f)
+            else if (distance < 6f)
             {
                 deathCounter = 0f;
                 startDeathCounter = false;
