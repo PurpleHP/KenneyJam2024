@@ -6911,7 +6911,6 @@ GameObject:
   - component: {fileID: 1468875103}
   - component: {fileID: 1468875102}
   - component: {fileID: 1468875101}
-  - component: {fileID: 1468875104}
   m_Layer: 0
   m_Name: LevelItems
   m_TagString: Untagged
@@ -7145,23 +7144,6 @@ Tilemap:
     e31: 0
     e32: 0
     e33: 1
---- !u!114 &1468875104
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468875099}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0777f85563595c4786dc2f9dd073366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  previousGrid: {fileID: 904778581}
-  currentGrid: {fileID: 1580951897}
-  Player: {fileID: 386569681}
-  spawnReplay: {fileID: 1685945105}
-  spawnPoint: {fileID: 1598807808}
 --- !u!1 &1524701389
 GameObject:
   m_ObjectHideFlags: 0
@@ -12018,7 +12000,6 @@ GameObject:
   - component: {fileID: 2130943172}
   - component: {fileID: 2130943171}
   - component: {fileID: 2130943170}
-  - component: {fileID: 2130943169}
   m_Layer: 0
   m_Name: LevelItems
   m_TagString: Untagged
@@ -12041,23 +12022,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1580951899}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2130943169
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2130943167}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b0777f85563595c4786dc2f9dd073366, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  previousGrid: {fileID: 0}
-  currentGrid: {fileID: 0}
-  Player: {fileID: 386569681}
-  spawnReplay: {fileID: 0}
-  spawnPoint: {fileID: 0}
 --- !u!19719996 &2130943170
 TilemapCollider2D:
   m_ObjectHideFlags: 0
