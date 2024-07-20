@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -5,29 +6,34 @@ using UnityEngine.SceneManagement;
 
 public class MenuScript : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
-        
+        if(!PlayerPrefs.HasKey("Level"))
+        {
+            PlayerPrefs.SetInt("Level", 1);
+        }
     }
 
-    // Update is called once per frame
-    void Update()
+    public void LoadLevel(int buildIndex)
     {
-        
+        PlayerPrefs.SetInt("Level", 1);
+        SceneManager.LoadScene(buildIndex); 
+
     }
 
-    public void StartGame()
+    public void StartGame() //Level select yüzünde Level İ -> build index = İ + 1 (Level1 -> build index 2)
     {
-        SceneManager.LoadScene(1); //Load level select
+        LoadLevel(1); //Load level select
     }
 
     public void Level1()
     {
-        SceneManager.LoadScene(2);
+        LoadLevel(2);
+
     }
     public void Level2()
     {
-        SceneManager.LoadScene(3);
+        LoadLevel(3);
+
     }
 }

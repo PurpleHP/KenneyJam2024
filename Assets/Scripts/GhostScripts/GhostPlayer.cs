@@ -8,7 +8,7 @@ public class GhostPlayer : MonoBehaviour
     private float timeValue;
     private int index1;
     private int index2;
-    private void Start()
+    private void Awake()
     {
         timeValue = 0;
     }

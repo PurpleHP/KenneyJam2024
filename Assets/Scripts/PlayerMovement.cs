@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] Transform groundCheck;
     [SerializeField] LayerMask groundLayer;
 
-    public int levelNumber;
+    public int levelNumber; //1 -> Ghost yok, 2 -> Ghost var
 
     private Rigidbody2D rb;
     private bool isGrounded;
@@ -29,7 +29,7 @@ public class PlayerMovement : MonoBehaviour
         }
         else
         {
-            PlayerPrefs.SetInt("Level", 0);
+            PlayerPrefs.SetInt("Level", 1);
         }
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = 1;
