@@ -4586,8 +4586,8 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fe74dcfd9fb70b14dacf365cbdae7278, type: 3}
-  m_Color: {r: 0.8627451, g: 0.2470588, b: 0.66030735, a: 1}
+  m_Sprite: {fileID: 21300000, guid: 2dab98052631b794494fed4e9f50de28, type: 3}
+  m_Color: {r: 1, g: 0.9550089, b: 0, a: 0.7764706}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -6544,6 +6544,14 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 5312028114602187456, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
+      propertyPath: m_Sprite
+      value: 
+      objectReference: {fileID: 21300000, guid: db74ff8099b65e146a044fb60b6eaa05, type: 3}
+    - target: {fileID: 5312028114602187456, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
+      propertyPath: m_WasSpriteAssigned
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 7896324043244492584, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
       propertyPath: m_Size.y
       value: 0.46948516

@@ -33,6 +33,7 @@ public class GhostRecorder : MonoBehaviour
         {
             ghost.timeStamp.Add(timeValue);
             ghost.position.Add(this.transform.position);
+            ghost.scale.Add(this.transform.localScale);
             if (anim.GetBool("isWalking"))
             {
                 ghost.animation.Add("isWalking");

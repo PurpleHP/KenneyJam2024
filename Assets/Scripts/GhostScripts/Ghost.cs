@@ -13,11 +13,13 @@ public class Ghost : ScriptableObject
     public List<float> timeStamp;
     public List<Vector2> position;
     public List<String> animation;
+    public List<Vector2> scale;
     public void ResetData()
     {
         timeStamp.Clear();
         position.Clear();
         animation.Clear();
+        scale.Clear();
     }
     
 }   

@@ -9,7 +9,7 @@ public class GhostPlayer : MonoBehaviour
     private int index1;
     private int index2;
     private Animator anim;
-    
+
     private void Awake()
     {
         timeValue = 0;
@@ -22,15 +22,25 @@ public class GhostPlayer : MonoBehaviour
 
         if (ghost.isReplay)
         {
-            Getindex();
-            SetTransform();
-            SetAnim();
+            if (timeValue > ghost.timeStamp[ghost.timeStamp.Count - 1])
+            {
+                anim.SetBool("isJumping",false);
+                anim.SetBool("isSprintJumping",false);
+                anim.SetBool("isWalking",false);
+            }
+            else
+            {
+                Getindex();
+                SetTransform();
+                SetAnim();
+            }
         }
+        
     }
 
     private void Getindex()
     {
-        for(int i = 0; i < ghost.timeStamp.Count - 2; i++)
+        for (int i = 0; i < ghost.timeStamp.Count - 2; i++)
         {
             if (ghost.timeStamp[i] == timeValue)
             {
@@ -41,12 +51,13 @@ public class GhostPlayer : MonoBehaviour
             else if (ghost.timeStamp[i] < timeValue && timeValue < ghost.timeStamp[i + 1])
             {
                 index1 = i;
-                index2 = i + 1; 
+                index2 = i + 1;
                 return;
             }
         }
         index1 = ghost.timeStamp.Count - 1;
-        index2 = ghost.timeStamp.Count - 1; 
+        index2 = ghost.timeStamp.Count - 1;
+        
     }
 
     private void SetTransform()
@@ -54,13 +65,15 @@ public class GhostPlayer : MonoBehaviour
         if (index1 == index2)
         {
             this.transform.position = ghost.position[index1];
+            this.transform.localScale = ghost.scale[index1];
             SetAnimationState(ghost.animation[index1]);
         }
         else
         {
             float interpolationFactor = (timeValue - ghost.timeStamp[index1]) / (ghost.timeStamp[index2] - ghost.timeStamp[index1]);
             this.transform.position = Vector2.Lerp(ghost.position[index1], ghost.position[index2], interpolationFactor);
-            
+            this.transform.localScale = Vector2.Lerp(ghost.scale[index1], ghost.scale[index2], interpolationFactor);
+
             // Interpolating between animation states
             string animState1 = ghost.animation[index1];
             string animState2 = ghost.animation[index2];
