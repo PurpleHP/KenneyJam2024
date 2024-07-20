@@ -95,8 +95,8 @@ public class GoToNextLevel : MonoBehaviour
 
         anim.SetBool(Fade, false);
         yield return new WaitForSeconds(stateInfo.length / anim.speed);
+        yield return new WaitForEndOfFrame();
         spawnReplay.LevelChanged();
-
         sr.enabled = true;
         movementScript.enabled = true;
     }

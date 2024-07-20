@@ -98,11 +98,14 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: b0777f85563595c4786dc2f9dd073366, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  previousGrid: {fileID: 0}
-  currentGrid: {fileID: 0}
+  firstLevelGrid: {fileID: 0}
+  secondLevelGrid: {fileID: 0}
   Player: {fileID: 0}
   spawnReplay: {fileID: 0}
   spawnPoint: {fileID: 0}
+  ghost: {fileID: 11400000, guid: 7a92743a7b9053248afdbc40b19451c7, type: 2}
+  anim: {fileID: 0}
+  blackImage: {fileID: 0}
 --- !u!61 &1178450059094992666
 BoxCollider2D:
   m_ObjectHideFlags: 0

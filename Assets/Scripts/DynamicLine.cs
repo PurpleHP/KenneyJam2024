@@ -1,5 +1,8 @@
 using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
+using UnityEngine.UI;
+
 
 public class DynamicLine : MonoBehaviour
 {
@@ -15,6 +18,9 @@ public class DynamicLine : MonoBehaviour
     [SerializeField] private SpawnReplay ghostHandler;
     private AudioSource audioSource;
 
+    
+    [SerializeField] private Animator anim;
+    [SerializeField] private Image  blackImage;
     void Start()
     {
         lineRenderer = GetComponent<LineRenderer>();
@@ -59,9 +65,13 @@ public class DynamicLine : MonoBehaviour
         {
             SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.yellow, Color.yellow);
         }
-        else if (distance < 6f)
+        else if (distance <= 5.5f)
         {
             SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.yellow, Color.red);
+        }
+        else if (distance < 6f)
+        {
+            SetLineProperties(solidMaterial, LineTextureMode.Stretch, Color.red, Color.red);
         }
         else
         {
@@ -101,6 +111,7 @@ public class DynamicLine : MonoBehaviour
 
             if (deathCounter > deathTime && distance > 6f)
             {
+                ghostHandler.spriteIsEnabled = false;
                 StartCoroutine(DeathSequence());
             }
             else if (distance < 6f)
@@ -119,9 +130,13 @@ public class DynamicLine : MonoBehaviour
 
     IEnumerator DeathSequence()
     {
+        lineRenderer.enabled = false;
         Debug.Log("Death Sequence Started!");
         Instantiate(Resources.Load("ExplosionPrefab"), player.position, Quaternion.identity); // Assuming you have an ExplosionPrefab in your Resources folder
         Destroy(player.gameObject);
-        yield return null;
+        anim.SetBool("Fade",true);
+        
+        yield return new WaitUntil(()=> blackImage.color.a == 1);
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 }
