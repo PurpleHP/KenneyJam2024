@@ -5197,10 +5197,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 0cd44c1031e13a943bb63640046fad76, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  m_UiScaleMode: 0
+  m_UiScaleMode: 1
   m_ReferencePixelsPerUnit: 100
   m_ScaleFactor: 1
-  m_ReferenceResolution: {x: 800, y: 600}
+  m_ReferenceResolution: {x: 1920, y: 1080}
   m_ScreenMatchMode: 0
   m_MatchWidthOrHeight: 0
   m_PhysicalUnit: 3
@@ -6505,6 +6505,10 @@ PrefabInstance:
       propertyPath: anim
       value: 
       objectReference: {fileID: 1742673428}
+    - target: {fileID: 1262486329505810370, guid: 2361a731ef2c0954c911bf215995cb7a, type: 3}
+      propertyPath: ghost
+      value: 
+      objectReference: {fileID: 11400000, guid: 7a92743a7b9053248afdbc40b19451c7, type: 2}
     - target: {fileID: 1262486329505810370, guid: 2361a731ef2c0954c911bf215995cb7a, type: 3}
       propertyPath: Player
       value: 

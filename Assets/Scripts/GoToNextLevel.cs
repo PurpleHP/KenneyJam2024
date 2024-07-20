@@ -57,22 +57,33 @@ public class GoToNextLevel : MonoBehaviour
     
     IEnumerator SameScene()
     {
-        rb.isKinematic = false;
+        ghost.isRecord = false;
         movementScript.enabled = false;
+        rb.velocity = new Vector2(0,0);
         sr.enabled = false;
         anim.SetBool(Fade,true);
         AnimatorStateInfo stateInfo = anim.GetCurrentAnimatorStateInfo(0);
-        if(ghost.timeStamp.Count > 0)
-            anim.speed = stateInfo.length * ghost.timeStamp[0] * 2;
+        if (ghost.timeStamp.Count > 0)
+        {
+            if (ghost.timeStamp[0] > 1)
+            {
+                anim.speed = stateInfo.length * ghost.timeStamp[0] * 2;
+            }
+            else
+            {
+                anim.speed = 0.5f;
+            }
+
+        }
         yield return new WaitForSeconds(stateInfo.length / anim.speed);
         currentGrid.SetActive(true);
         Player.gameObject.transform.position = spawnPoint.gameObject.transform.position;
         previousGrid.SetActive(false);
         anim.SetBool(Fade,false);
         yield return new WaitForSeconds(stateInfo.length / anim.speed);
-        rb.isKinematic = true;
         sr.enabled = true;
         movementScript.enabled = true;
         spawnReplay.LevelChanged();
+
     }
 }
