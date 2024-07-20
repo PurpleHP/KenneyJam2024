@@ -1,3 +1,4 @@
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -7,6 +8,12 @@ public class GhostRecorder : MonoBehaviour
     public Ghost ghost;
     private float timer;
     private float timeValue;
+
+    private Animator anim;
+    private void Awake()
+    {
+        anim = GetComponent<Animator>();
+    }
 
     private void Start()
     {
@@ -26,7 +33,24 @@ public class GhostRecorder : MonoBehaviour
         {
             ghost.timeStamp.Add(timeValue);
             ghost.position.Add(this.transform.position);
-
+            if (anim.GetBool("isWalking"))
+            {
+                ghost.animation.Add("isWalking");
+            }
+            else if (anim.GetBool("isJumping"))
+            {
+                ghost.animation.Add("isJumping");
+            }
+            else if (anim.GetBool("isSprintJumping"))
+            {
+                ghost.animation.Add("isSprintJumping");
+            }
+            else
+            {
+                ghost.animation.Add("isIdle");
+            }
+           
+                
             timer = 0; 
         }
     }
