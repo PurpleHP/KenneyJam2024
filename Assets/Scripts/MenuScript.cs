@@ -14,6 +14,7 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+  
     public void LoadLevel(int buildIndex)
     {
         PlayerPrefs.SetInt("Level", 1);
@@ -21,6 +22,12 @@ public class MenuScript : MonoBehaviour
 
     }
 
+    public void MainMenu()
+    {
+        LoadLevel(0);
+    }
+
+    
     public void StartGame() //Level select yüzünde Level İ -> build index = İ + 1 (Level1 -> build index 2)
     {
         LoadLevel(1); //Load level select

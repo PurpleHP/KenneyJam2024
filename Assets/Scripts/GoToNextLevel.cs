@@ -57,11 +57,10 @@ public class GoToNextLevel : MonoBehaviour
     {
         movementScript.enabled = false;
         rb.velocity = Vector2.zero;
-        sr.enabled = false;
+        sr.enabled = false; 
+        anim.speed = 1f;
         anim.SetBool(Fade, true);
-
-        yield return new WaitUntil(() => Math.Abs(blackImage.color.a - 1) < 0.0001f);
-        yield return new WaitForSeconds(0.5f);
+        yield return new WaitForSeconds(1.5f);
         SceneManager.LoadScene(buildIndex + 1);
     }
 
@@ -94,10 +93,8 @@ public class GoToNextLevel : MonoBehaviour
         secondLevelGrid.SetActive(true);
         Player.transform.position = spawnPoint.transform.position;
 
-        yield return new WaitForEndOfFrame(); // Ensure frame update
         anim.SetBool(Fade, false);
         yield return new WaitForSeconds(stateInfo.length / anim.speed);
-        yield return new WaitForEndOfFrame();
         spawnReplay.LevelChanged();
 
         sr.enabled = true;
