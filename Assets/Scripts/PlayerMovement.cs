@@ -10,7 +10,7 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashCooldown = 1f; 
     
     [SerializeField] Transform groundCheck1;
-    [SerializeField] Transform groundCheck2;
+    //[SerializeField] Transform groundCheck2;
     [SerializeField] LayerMask groundLayer;
     [SerializeField] private GameObject SpawnPoint;
 
@@ -25,8 +25,8 @@ public class PlayerMovement : MonoBehaviour
     private float lastDirection = 1f; // 1 for right, -1 for left
     
     // Sound
-    public AudioSource src;
-    public List<AudioClip> sfx = new List<AudioClip>(3); //0 -> Walk, 1 -> Dash, 2 -> Land, 3 -> Jump
+    private AudioSource src;
+    public AudioClip  walkSfx, dashSfx, landSfx, jumpSfx;
 
     // Animation
     private Animator anim;
@@ -38,6 +38,7 @@ public class PlayerMovement : MonoBehaviour
     {
         transform.position = SpawnPoint.transform.position;
         anim = GetComponent<Animator>();
+        src = GetComponent<AudioSource>();
         rb = GetComponent<Rigidbody2D>();
         jumpsRemaining = 1;
         isDashing = false;
@@ -47,11 +48,12 @@ public class PlayerMovement : MonoBehaviour
     }
 private void Update()
 {
-    isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.15f, groundLayer) || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
+    isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.1f, groundLayer);
+    // || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
 
     if (isGrounded && !wasGrounded) // Landing sound
     {
-        src.PlayOneShot(sfx[2]);
+        src.PlayOneShot(landSfx);
     }
 
     wasGrounded = isGrounded;
@@ -86,7 +88,7 @@ private void Update()
         {
             rb.velocity = new Vector2(rb.velocity.x, jumpForce);
             jumpsRemaining--;
-            src.PlayOneShot(sfx[3]);
+            src.PlayOneShot(jumpSfx);
         }
 
         // Dashing
@@ -111,7 +113,7 @@ private void Update()
         isDashing = true;
         dashTime = Time.time;
         lastDashTime = Time.time;
-        src.PlayOneShot(sfx[1]);
+        src.PlayOneShot(dashSfx);
 
         
         rb.velocity = new Vector2(lastDirection * dashSpeed, rb.velocity.y); // Dashing in the direction the player is facing

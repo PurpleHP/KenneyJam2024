@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 2722559026109723908}
   m_Layer: 0
-  m_Name: GroundCheckLeft
+  m_Name: GroundCheck
   m_TagString: Untagged
   m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
   m_NavMeshLayer: 0
@@ -25,7 +25,7 @@ Transform:
   m_GameObject: {fileID: 3831442592296116200}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -0.189, y: -0.486, z: 0}
+  m_LocalPosition: {x: 0, y: -0.486, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,6 +46,8 @@ GameObject:
   - component: {fileID: 191798005320002442}
   - component: {fileID: 7896324043244492584}
   - component: {fileID: 6920326641766065456}
+  - component: {fileID: 2644693114632891301}
+  - component: {fileID: 3546949230641377440}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -67,7 +69,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2722559026109723908}
-  - {fileID: 2169013637384244863}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!212 &5312028114602187456
@@ -111,7 +112,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: fe74dcfd9fb70b14dacf365cbdae7278, type: 3}
+  m_Sprite: {fileID: 21300000, guid: db74ff8099b65e146a044fb60b6eaa05, type: 3}
   m_Color: {r: 0.122641385, g: 1, b: 0.710793, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -153,11 +154,14 @@ MonoBehaviour:
   dashDuration: 0.3
   dashCooldown: 1
   groundCheck1: {fileID: 2722559026109723908}
-  groundCheck2: {fileID: 2169013637384244863}
   groundLayer:
     serializedVersion: 2
     m_Bits: 64
-  levelNumber: 0
+  SpawnPoint: {fileID: 0}
+  walkSfx: {fileID: 8300000, guid: 7cccfc9d4ccbc8048a2d29916fa7d980, type: 3}
+  dashSfx: {fileID: 8300000, guid: 26ed09b4ee4cfd74b809281a3e24fa71, type: 3}
+  landSfx: {fileID: 8300000, guid: e117ce744a5797c45b42d09e43ffd8a2, type: 3}
+  jumpSfx: {fileID: 8300000, guid: d935f46115ed2ed4c99fd87ff61ad7a3, type: 3}
 --- !u!50 &191798005320002442
 Rigidbody2D:
   serializedVersion: 4
@@ -217,18 +221,18 @@ BoxCollider2D:
   m_IsTrigger: 0
   m_UsedByEffector: 0
   m_UsedByComposite: 0
-  m_Offset: {x: 0.004690647, y: -0.14406312}
+  m_Offset: {x: 0.004690647, y: -0.12208527}
   m_SpriteTilingProperty:
     border: {x: 0, y: 0, z: 0, w: 0}
     pivot: {x: 0.5, y: 0.5}
-    oldSize: {x: 0.8, y: 0.8}
+    oldSize: {x: 1, y: 1}
     newSize: {x: 1, y: 1}
     adaptiveTilingThreshold: 0.5
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
   serializedVersion: 2
-  m_Size: {x: 0.5429621, y: 0.51344085}
+  m_Size: {x: 0.5794721, y: 0.46948516}
   m_EdgeRadius: 0
 --- !u!95 &6920326641766065456
 Animator:
@@ -251,34 +255,111 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!1 &9093432513727876756
-GameObject:
+--- !u!114 &2644693114632891301
+MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 2169013637384244863}
-  m_Layer: 0
-  m_Name: GroundCheckRight
-  m_TagString: Untagged
-  m_Icon: {fileID: -1412012063857583412, guid: 0000000000000000d000000000000000, type: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &2169013637384244863
-Transform:
+  m_GameObject: {fileID: 7903544716098369650}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 29082092e272dfc40ad18e9cd166104d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!82 &3546949230641377440
+AudioSource:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 9093432513727876756}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0.214, y: -0.486, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 8472965102029679022}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_GameObject: {fileID: 7903544716098369650}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 0}
+  m_PlayOnAwake: 1
+  m_Volume: 1
+  m_Pitch: 1
+  Loop: 0
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 1000
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
