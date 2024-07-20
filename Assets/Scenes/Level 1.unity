@@ -6533,6 +6533,14 @@ PrefabInstance:
       propertyPath: previousGrid
       value: 
       objectReference: {fileID: 1580951897}
+    - target: {fileID: 1262486329505810370, guid: 2361a731ef2c0954c911bf215995cb7a, type: 3}
+      propertyPath: firstLevelGrid
+      value: 
+      objectReference: {fileID: 1580951897}
+    - target: {fileID: 1262486329505810370, guid: 2361a731ef2c0954c911bf215995cb7a, type: 3}
+      propertyPath: secondLevelGrid
+      value: 
+      objectReference: {fileID: 904778581}
     - target: {fileID: 4761983787042259403, guid: 2361a731ef2c0954c911bf215995cb7a, type: 3}
       propertyPath: m_LocalPosition.x
       value: 9.51

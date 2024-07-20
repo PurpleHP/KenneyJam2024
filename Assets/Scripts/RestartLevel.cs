@@ -35,7 +35,7 @@ public class RestartLevel : MonoBehaviour
         }
         else
         {
-            Debug.Log("Not in x.2 level");
+            Debug.Log("Not in 2nd Phase");
         }
     
     }
