@@ -7,7 +7,9 @@ public class PlayerMovement : MonoBehaviour
     [SerializeField] float dashSpeed = 20f; // Adjust as needed
     [SerializeField] float dashDuration = 0.2f; // Adjust as needed
     [SerializeField] float dashCooldown = 1f; // Adjust as needed
-    [SerializeField] Transform groundCheck;
+    [SerializeField] Transform groundCheck1;
+    [SerializeField] Transform groundCheck2;
+
     [SerializeField] LayerMask groundLayer;
 
     public int levelNumber; //1 -> Ghost yok, 2 -> Ghost var
@@ -24,7 +26,7 @@ public class PlayerMovement : MonoBehaviour
     //Animation -------------------------------------------------------------
     private Animator anim;
     private static readonly int IsWalking = Animator.StringToHash("isWalking");
-    private static readonly int İsJumping = Animator.StringToHash("isJumping");
+    private static readonly int IsJumping = Animator.StringToHash("isJumping");
     private static readonly int IsSprintJumping = Animator.StringToHash("isSprintJumping");
 
 
@@ -48,7 +50,7 @@ public class PlayerMovement : MonoBehaviour
 
     private void Update()
     {
-        isGrounded = Physics2D.OverlapCircle(groundCheck.position, 0.1f, groundLayer);
+        isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.15f, groundLayer) || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
 
         if (!isDashing)
         {
@@ -130,34 +132,30 @@ public class PlayerMovement : MonoBehaviour
     {
         if (isGrounded)
         {
-            anim.SetBool(İsJumping,false);
+            anim.SetBool(IsJumping, false);
+            anim.SetBool(IsSprintJumping, false);
         }
-        if (horizontalInput != 0) //sağa ya da sola hareket ediyor
+        else
         {
-            if (isGrounded)
+            if (Mathf.Abs(horizontalInput) > 0.1f) // If moving horizontally in the air
             {
-                anim.SetBool(IsWalking, true);
-            }
-            else
-            {
-                anim.SetBool(IsWalking,false);
+                anim.SetBool(IsJumping, false);
                 anim.SetBool(IsSprintJumping, true);
             }
-            
+            else // If not moving horizontally in the air
+            {
+                anim.SetBool(IsJumping, true);
+                anim.SetBool(IsSprintJumping, false);
+            }
+        }
+
+        if (isGrounded && Mathf.Abs(horizontalInput) > 0.1f) // If grounded and moving horizontally
+        {
+            anim.SetBool(IsWalking, true);
         }
         else
         {
             anim.SetBool(IsWalking, false);
-            if (isGrounded)
-            {
-                anim.SetBool(İsJumping,false);
-                anim.SetBool(IsSprintJumping,false);
-
-            }
-            else
-            {
-                anim.SetBool(İsJumping,true);
-            }
         }
     }
 }
