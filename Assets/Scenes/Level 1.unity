@@ -6621,17 +6621,25 @@ PrefabInstance:
       propertyPath: m_Enabled
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 7896324043244492584, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.x
+      value: 0.16
+      objectReference: {fileID: 0}
+    - target: {fileID: 7896324043244492584, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
+      propertyPath: m_SpriteTilingProperty.oldSize.y
+      value: 0.16
+      objectReference: {fileID: 0}
     - target: {fileID: 7903544716098369650, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
       propertyPath: m_Name
       value: Temp Player
       objectReference: {fileID: 0}
     - target: {fileID: 8472965102029679022, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
       propertyPath: m_LocalScale.x
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8472965102029679022, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
       propertyPath: m_LocalScale.y
-      value: 10
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8472965102029679022, guid: 4866fe6595315e54790aeecac549c74a, type: 3}
       propertyPath: m_LocalPosition.x
