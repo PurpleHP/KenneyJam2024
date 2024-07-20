@@ -22,6 +22,7 @@ public class GoToNextLevel : MonoBehaviour
 
     private void Awake()
     {
+        blackImage.raycastTarget = false;
         movementScript = Player.GetComponent<PlayerMovement>();
         sr = Player.GetComponent<SpriteRenderer>();
         rb = Player.GetComponent<Rigidbody2D>();

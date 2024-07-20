@@ -21,8 +21,9 @@ public class DynamicLine : MonoBehaviour
     
     [SerializeField] private Animator anim;
     [SerializeField] private Image  blackImage;
-    void Start()
+    void Awake()
     {
+        blackImage.raycastTarget = false;
         lineRenderer = GetComponent<LineRenderer>();
         lineRenderer.positionCount = 2;
         audioSource = GetComponent<AudioSource>(); // Initialize audioSource

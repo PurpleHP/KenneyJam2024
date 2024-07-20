@@ -3,11 +3,16 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
+using UnityEngine.UI;
 
 public class MenuScript : MonoBehaviour
 {
+    [SerializeField] private Image blackImage;
+    [SerializeField] private Animator anim;
     private void Awake()
     {
+        blackImage.raycastTarget = false;
+
         if(!PlayerPrefs.HasKey("Level"))
         {
             PlayerPrefs.SetInt("Level", 1);
@@ -15,61 +20,63 @@ public class MenuScript : MonoBehaviour
     }
 
   
-    public void LoadLevel(int buildIndex)
+    IEnumerator LoadLevel(int buildIndex)
     {
         PlayerPrefs.SetInt("Level", 1);
+        anim.SetBool("Fade", true);
+        yield return new WaitUntil(() => Math.Abs(blackImage.color.a - 1) < 0.005f);
         SceneManager.LoadScene(buildIndex); 
-
+        
     }
 
     public void MainMenu()
     {
-        LoadLevel(0);
+        StartCoroutine(LoadLevel(0));
     }
 
     
     public void StartGame() //Level select yüzünde Level İ -> build index = İ + 2 (Level1 -> build index 3)
     {
-        LoadLevel(1); //Load level select
+        StartCoroutine(LoadLevel(1)); //Load level select
     }
 
     public void Level1()
     {
-        LoadLevel(3);
+        StartCoroutine(LoadLevel(3));
 
     }
     public void Level2()
     {
-        LoadLevel(4);
+        StartCoroutine(LoadLevel(4));
     }
     public void Level3()
     {
-        LoadLevel(5);
+        StartCoroutine(LoadLevel(5));
 
     }
     public void Level4()
     {
-        LoadLevel(6);
+        StartCoroutine(LoadLevel(6));
 
     }
     public void Level5()
     {
-        LoadLevel(7);
+        StartCoroutine(LoadLevel(7));
 
     }
     public void Level6()
     {
-        LoadLevel(8);
+        StartCoroutine(LoadLevel(8));
 
     }
     public void Level7()
     {
-        LoadLevel(9);
+        StartCoroutine(LoadLevel(9));
 
     }
     public void Level8()
     {
-        LoadLevel(10);
+        StartCoroutine(LoadLevel(10));
 
     }
 }
