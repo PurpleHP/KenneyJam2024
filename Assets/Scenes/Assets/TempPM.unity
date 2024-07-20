@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!120 &331567908 stripped
+LineRenderer:
+  m_CorrespondingSourceObject: {fileID: 48489191028401952, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
+  m_PrefabInstance: {fileID: 844888752690625049}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &440533937
 GameObject:
   m_ObjectHideFlags: 0
@@ -808,6 +813,10 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 48489191028401952, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
+      propertyPath: m_ApplyActiveColorSpace
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 4282801876658081824, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
       propertyPath: m_Name
       value: LineHandler
@@ -820,6 +829,10 @@ PrefabInstance:
       propertyPath: playerGhost
       value: 
       objectReference: {fileID: 544300016}
+    - target: {fileID: 5311023083443869596, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
+      propertyPath: lineRenderer
+      value: 
+      objectReference: {fileID: 331567908}
     - target: {fileID: 6036283856365027452, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
       propertyPath: m_LocalPosition.x
       value: 3.5748708
