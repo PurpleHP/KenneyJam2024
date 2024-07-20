@@ -20,9 +20,17 @@ public class PlayerMovement : MonoBehaviour
     private float lastDashTime;
     private float horizontalInput;
     private float lastDirection = 1f; // 1 for right, -1 for left
+    
+    //Animation -------------------------------------------------------------
+    private Animator anim;
+    private static readonly int IsWalking = Animator.StringToHash("isWalking");
+    private static readonly int İsJumping = Animator.StringToHash("isJumping");
+    private static readonly int IsSprintJumping = Animator.StringToHash("isSprintJumping");
+
 
     private void Awake()
     {
+        anim = GetComponent<Animator>();
         if (PlayerPrefs.HasKey("Level"))
         {
             levelNumber = PlayerPrefs.GetInt("Level");
@@ -50,12 +58,12 @@ public class PlayerMovement : MonoBehaviour
             if (horizontalInput > 0)
             {
                 lastDirection = 1f;
-                transform.localScale = new Vector3(1f, transform.localScale.y, transform.localScale.z); // Face right
+                transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face right
             }
             else if (horizontalInput < 0)
             {
                 lastDirection = -1f;
-                transform.localScale = new Vector3(-1f, transform.localScale.y, transform.localScale.z); // Face left
+                transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face left
             }
 
             // Update horizontal velocity while preserving the vertical velocity
@@ -79,6 +87,8 @@ public class PlayerMovement : MonoBehaviour
             {
                 StartDash();
             }
+
+            SetAnimation();
         }
         else
         {
@@ -113,6 +123,41 @@ public class PlayerMovement : MonoBehaviour
         if (isDashing)
         {
             rb.velocity = new Vector2(lastDirection * dashSpeed, rb.velocity.y); // Maintain dash speed during the dash
+        }
+    }
+
+    private void SetAnimation()
+    {
+        if (isGrounded)
+        {
+            anim.SetBool(İsJumping,false);
+        }
+        if (horizontalInput != 0) //sağa ya da sola hareket ediyor
+        {
+            if (isGrounded)
+            {
+                anim.SetBool(IsWalking, true);
+            }
+            else
+            {
+                anim.SetBool(IsWalking,false);
+                anim.SetBool(IsSprintJumping, true);
+            }
+            
+        }
+        else
+        {
+            anim.SetBool(IsWalking, false);
+            if (isGrounded)
+            {
+                anim.SetBool(İsJumping,false);
+                anim.SetBool(IsSprintJumping,false);
+
+            }
+            else
+            {
+                anim.SetBool(İsJumping,true);
+            }
         }
     }
 }
