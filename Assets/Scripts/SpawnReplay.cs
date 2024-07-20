@@ -59,9 +59,12 @@ public class SpawnReplay : MonoBehaviour
             else
             {
                 
-                float startTime = ghostScriptable.timeStamp[0];
-                Debug.Log("First Tİmestamp: " + startTime);
-                StartCoroutine(ShowGhost(startTime)); 
+                ghostScriptable.isRecord = false;
+                ghostPlayer.SetActive(true);
+                ghostPlayer.gameObject.transform.position = spawnPoint.gameObject.transform.position;
+                sr.enabled = true;
+                spriteIsEnabled = true;
+                ghostScriptable.isReplay = true;
            
             }
         }
@@ -69,6 +72,7 @@ public class SpawnReplay : MonoBehaviour
 
     }
 
+    /*
     IEnumerator ShowGhost(float startTime)
     {
         ghostScriptable.isRecord = false;
@@ -79,5 +83,5 @@ public class SpawnReplay : MonoBehaviour
         spriteIsEnabled = true;
         ghostScriptable.isReplay = true;
 
-    }
+    }*/
 }
