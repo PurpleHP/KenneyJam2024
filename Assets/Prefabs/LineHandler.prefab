@@ -51,7 +51,7 @@ MonoBehaviour:
   solidMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   dashedMaterial: {fileID: 2100000, guid: 80ffd9d6fc5f1bf46a53f03530242001, type: 2}
   deathSound: {fileID: 8300000, guid: 3b689acc0f9552a49b3c1976c81a292b, type: 3}
-  deathTime: 2.2
+  deathTime: 2.25
   ghostHandler: {fileID: 0}
   anim: {fileID: 0}
   blackImage: {fileID: 0}
@@ -171,7 +171,7 @@ AudioSource:
   OutputAudioMixerGroup: {fileID: 1383179548899789523, guid: 34c617a66877a4146a24f2dd1e344081, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
-  m_Volume: 1
+  m_Volume: 0.7
   m_Pitch: 1
   Loop: 0
   Mute: 0

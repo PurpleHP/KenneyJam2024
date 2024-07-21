@@ -33,7 +33,7 @@ public class PlayerMovement : MonoBehaviour
     
     // Sound
     private AudioSource src;
-    public AudioClip  walkSfx, dashSfx, landSfx, jumpSfx;
+    public AudioClip  walkSfx, dashSfx, landSfx, jumpSfx, deathSfx;
 
     // Animation
     private Animator anim;
@@ -41,9 +41,11 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int IsJumping = Animator.StringToHash("isJumping");
     private static readonly int IsSprintJumping = Animator.StringToHash("isSprintJumping");
 
+    public float portalTime;
     
     private void Awake()
     {
+        portalTime = 0f;
         transform.position = SpawnPoint.transform.position;
         anim = GetComponent<Animator>();
         src = GetComponent<AudioSource>();
@@ -67,31 +69,26 @@ public class PlayerMovement : MonoBehaviour
         {
             timeOnTheGame = PlayerPrefs.GetFloat("Time");
         }
-
-        if (finalScene)
-        {
-            timeOnTheGame = PlayerPrefs.GetFloat("Time");
-            finalTime = FormatTime(timeOnTheGame);
-            //timeText.text = "Time: " + FormatTime(timeOnTheGame);
-        }
+        
     }
-
-    private string FormatTime(float time)
-    {
-        int minutes = Mathf.FloorToInt(time / 60F);
-        int seconds = Mathf.FloorToInt(time % 60F);
-        int milliseconds = Mathf.FloorToInt((time * 100F) % 100F);
-        return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
-    }
+    
     
     private void Update()
     {
-        if (!finalScene)
-        {
-            timeOnTheGame += Time.deltaTime;
-            PlayerPrefs.SetFloat("Time", timeOnTheGame);
-        }
+      
+        timeOnTheGame += Time.deltaTime;
+        PlayerPrefs.SetFloat("Time", timeOnTheGame);
+    
 
+        if (portalTime > 0f)
+        {
+            portalTime -= Time.deltaTime;
+        }
+        else
+        {
+            portalTime = 0;
+        }
+        
         isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.1f, groundLayer);
         // || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
 

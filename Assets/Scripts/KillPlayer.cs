@@ -34,9 +34,12 @@ public class KillPlayer : MonoBehaviour
     }
     
     IEnumerator ReloadScene()
-    {   
+    {
 
+        AudioSource audioSource = playerObject.GetComponent<AudioSource>();
+        PlayerMovement pM = playerObject.GetComponent<PlayerMovement>();
         Instantiate(Resources.Load("BloodPrefab"), playerObject.transform.position, Quaternion.identity); 
+        audioSource.PlayOneShot(pM.deathSfx);
         movementScript.enabled = false;
         rb.velocity = Vector2.zero;
         sr.enabled = false; 
