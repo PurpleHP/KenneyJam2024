@@ -39,7 +39,11 @@ public class MenuScript : MonoBehaviour
     {
         StartCoroutine(LoadLevel(1)); //Load level select
     }
+    public void Tutorial()
+    {
+        StartCoroutine(LoadLevel(2));
 
+    }
     public void Level1()
     {
         StartCoroutine(LoadLevel(3));
