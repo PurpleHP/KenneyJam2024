@@ -15,6 +15,8 @@ public class GoToNextLevel : MonoBehaviour
     [SerializeField] private Animator anim;
     [SerializeField] private Image blackImage;
 
+    [SerializeField] private GameObject blueHeart;
+    
     private PlayerMovement movementScript;
     private SpriteRenderer sr;
     private Rigidbody2D rb;
@@ -30,11 +32,18 @@ public class GoToNextLevel : MonoBehaviour
         {
             firstLevelGrid.SetActive(false);
             secondLevelGrid.SetActive(true);
+            if (blueHeart != null)
+            {
+                gameObject.transform.position = blueHeart.transform.position;
+                blueHeart.SetActive(false);
+            }
         }
         else
         {
             firstLevelGrid.SetActive(true);
             secondLevelGrid.SetActive(false);
+            blueHeart.SetActive(true);
+
         }
     }
 
@@ -90,6 +99,13 @@ public class GoToNextLevel : MonoBehaviour
         }
 
         yield return new WaitForSeconds(stateInfo.length / anim.speed);
+        if (blueHeart != null)
+        {
+            gameObject.transform.position = blueHeart.transform.position;
+            blueHeart.SetActive(false);
+
+        }
+        
         firstLevelGrid.SetActive(false);
         secondLevelGrid.SetActive(true);
         Player.transform.position = spawnPoint.transform.position;
