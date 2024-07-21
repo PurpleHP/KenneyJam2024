@@ -5178,10 +5178,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 48489191028401952, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
-      propertyPath: m_Enabled
-      value: 1
-      objectReference: {fileID: 0}
     - target: {fileID: 4282801876658081824, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
       propertyPath: m_Name
       value: LineHandler
@@ -5194,10 +5190,6 @@ PrefabInstance:
       propertyPath: player
       value: 
       objectReference: {fileID: 1247734804}
-    - target: {fileID: 5311023083443869596, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
-      propertyPath: deathTime
-      value: 2.3
-      objectReference: {fileID: 0}
     - target: {fileID: 5311023083443869596, guid: 8ad9af90fd9d7824fb4af436e74bbd45, type: 3}
       propertyPath: blackImage
       value: 
@@ -12429,7 +12421,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7588712905336254604, guid: e801f30f20d5b5743b8f6fb85620cfd8, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
