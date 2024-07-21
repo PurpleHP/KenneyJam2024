@@ -113,7 +113,7 @@ SpriteRenderer:
   m_SortingLayer: 0
   m_SortingOrder: 0
   m_Sprite: {fileID: 21300000, guid: db74ff8099b65e146a044fb60b6eaa05, type: 3}
-  m_Color: {r: 0.122641385, g: 1, b: 0.710793, a: 1}
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
   m_DrawMode: 0
@@ -158,6 +158,9 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 64
   SpawnPoint: {fileID: 0}
+  timeOnTheGame: 0
+  finalTime: 
+  finalSceneBuiildIndex: 11
   walkSfx: {fileID: 8300000, guid: 7cccfc9d4ccbc8048a2d29916fa7d980, type: 3}
   dashSfx: {fileID: 8300000, guid: 26ed09b4ee4cfd74b809281a3e24fa71, type: 3}
   landSfx: {fileID: 8300000, guid: e117ce744a5797c45b42d09e43ffd8a2, type: 3}
@@ -276,7 +279,7 @@ AudioSource:
   m_GameObject: {fileID: 7903544716098369650}
   m_Enabled: 1
   serializedVersion: 4
-  OutputAudioMixerGroup: {fileID: 0}
+  OutputAudioMixerGroup: {fileID: 1383179548899789523, guid: 34c617a66877a4146a24f2dd1e344081, type: 2}
   m_audioClip: {fileID: 0}
   m_PlayOnAwake: 1
   m_Volume: 1

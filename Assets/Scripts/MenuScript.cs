@@ -19,6 +19,15 @@ public class MenuScript : MonoBehaviour
         }
     }
 
+    public void QuitGame()
+    {
+#if UNITY_EDITOR
+        UnityEditor.EditorApplication.isPlaying = false;
+#else
+    // If running in a built application
+        Application.Quit();
+#endif
+    }
   
     IEnumerator LoadLevel(int buildIndex)
     {

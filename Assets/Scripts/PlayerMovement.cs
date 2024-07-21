@@ -1,5 +1,7 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class PlayerMovement : MonoBehaviour
 {
@@ -23,6 +25,11 @@ public class PlayerMovement : MonoBehaviour
     private float lastDashTime;
     private float horizontalInput;
     private float lastDirection = 1f; // 1 for right, -1 for left
+
+    public float timeOnTheGame;
+    private bool finalScene;
+    public string finalTime;
+    [SerializeField] private int finalSceneBuiildIndex = 11;
     
     // Sound
     private AudioSource src;
@@ -34,6 +41,7 @@ public class PlayerMovement : MonoBehaviour
     private static readonly int IsJumping = Animator.StringToHash("isJumping");
     private static readonly int IsSprintJumping = Animator.StringToHash("isSprintJumping");
 
+    
     private void Awake()
     {
         transform.position = SpawnPoint.transform.position;
@@ -45,67 +53,103 @@ public class PlayerMovement : MonoBehaviour
         dashTime = 0f;
         lastDashTime = -dashCooldown; // So that the player can dash immediately at start
         wasGrounded = true;
+        finalScene = SceneManager.GetActiveScene().buildIndex == finalSceneBuiildIndex;
     }
-private void Update()
-{
-    isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.1f, groundLayer);
-    // || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
 
-    if (isGrounded && !wasGrounded) // Landing sound
+    private void Start()
     {
-        src.PlayOneShot(landSfx);
+        if (!PlayerPrefs.HasKey("Time"))
+        {
+            timeOnTheGame = 0f;
+            PlayerPrefs.SetFloat("Time",timeOnTheGame);
+        }
+        else
+        {
+            timeOnTheGame = PlayerPrefs.GetFloat("Time");
+        }
+
+        if (finalScene)
+        {
+            timeOnTheGame = PlayerPrefs.GetFloat("Time");
+            finalTime = FormatTime(timeOnTheGame);
+            //timeText.text = "Time: " + FormatTime(timeOnTheGame);
+        }
     }
 
-    wasGrounded = isGrounded;
-
-    if (!isDashing)
+    private string FormatTime(float time)
     {
-        horizontalInput = Input.GetAxis("Horizontal");
-        
-        // Update facing direction based on input
-        if (horizontalInput > 0)
-        {
-            lastDirection = 1f;
-            transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face right
-        }
-        else if (horizontalInput < 0)
-        {
-            lastDirection = -1f;
-            transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face left
-        }
-
-        // Update horizontal velocity while preserving the vertical velocity
-        rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
-       
-        if (isGrounded)
-        {
-            jumpsRemaining = 1; // Reset jumps when grounded
-            dashCooldown = 0f;
-        }
-
-        // Jumping
-        if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
-        {
-            rb.velocity = new Vector2(rb.velocity.x, jumpForce);
-            jumpsRemaining--;
-            src.PlayOneShot(jumpSfx);
-        }
-
-        // Dashing
-        if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown)
-        {
-            StartDash();
-        }
-
-       
-
-        SetAnimation();
+        int minutes = Mathf.FloorToInt(time / 60F);
+        int seconds = Mathf.FloorToInt(time % 60F);
+        int milliseconds = Mathf.FloorToInt((time * 100F) % 100F);
+        return string.Format("{0:00}:{1:00}:{2:00}", minutes, seconds, milliseconds);
     }
-    else
+    
+    private void Update()
     {
-        ContinueDash();
+        if (!finalScene)
+        {
+            timeOnTheGame += Time.deltaTime;
+            PlayerPrefs.SetFloat("Time", timeOnTheGame);
+        }
+
+        isGrounded = Physics2D.OverlapCircle(groundCheck1.position, 0.1f, groundLayer);
+        // || Physics2D.OverlapCircle(groundCheck2.position, 0.15f, groundLayer);
+
+        if (isGrounded && !wasGrounded) // Landing sound
+        {
+            src.PlayOneShot(landSfx);
+        }
+
+        wasGrounded = isGrounded;
+
+        if (!isDashing)
+        {
+            horizontalInput = Input.GetAxis("Horizontal");
+            
+            // Update facing direction based on input
+            if (horizontalInput > 0)
+            {
+                lastDirection = 1f;
+                transform.localScale = new Vector2(Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face right
+            }
+            else if (horizontalInput < 0)
+            {
+                lastDirection = -1f;
+                transform.localScale = new Vector2(-Mathf.Abs(transform.localScale.x), transform.localScale.y); // Face left
+            }
+
+            // Update horizontal velocity while preserving the vertical velocity
+            rb.velocity = new Vector2(horizontalInput * moveSpeed, rb.velocity.y);
+           
+            if (isGrounded)
+            {
+                jumpsRemaining = 1; // Reset jumps when grounded
+                dashCooldown = 0f;
+            }
+
+            // Jumping
+            if (Input.GetButtonDown("Jump") && jumpsRemaining > 0)
+            {
+                rb.velocity = new Vector2(rb.velocity.x, jumpForce);
+                jumpsRemaining--;
+                src.PlayOneShot(jumpSfx);
+            }
+
+            // Dashing
+            if (Input.GetKeyDown(KeyCode.LeftShift) && Time.time > lastDashTime + dashCooldown)
+            {
+                StartDash();
+            }
+
+           
+
+            SetAnimation();
+        }
+        else
+        {
+            ContinueDash();
+        }   
     }
-}
 
 
     private void StartDash()
