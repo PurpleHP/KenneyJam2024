@@ -51,7 +51,7 @@ MonoBehaviour:
   solidMaterial: {fileID: 10306, guid: 0000000000000000f000000000000000, type: 0}
   dashedMaterial: {fileID: 2100000, guid: 80ffd9d6fc5f1bf46a53f03530242001, type: 2}
   deathSound: {fileID: 8300000, guid: 3b689acc0f9552a49b3c1976c81a292b, type: 3}
-  deathTime: 2.3
+  deathTime: 2.2
   ghostHandler: {fileID: 0}
   anim: {fileID: 0}
   blackImage: {fileID: 0}
@@ -120,8 +120,8 @@ LineRenderer:
       m_RotationOrder: 4
     colorGradient:
       serializedVersion: 2
-      key0: {r: 0.1800971, g: 1, b: 0, a: 1}
-      key1: {r: 0.18039216, g: 1, b: 0, a: 1}
+      key0: {r: 0.91194963, g: 0.06845272, b: 0, a: 1}
+      key1: {r: 1, g: 0.04307412, b: 0, a: 1}
       key2: {r: 0, g: 0, b: 0, a: 0}
       key3: {r: 0, g: 0, b: 0, a: 0}
       key4: {r: 0, g: 0, b: 0, a: 0}
